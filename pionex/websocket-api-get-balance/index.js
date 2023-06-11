@@ -10,7 +10,7 @@ const websocketURL = 'wss://ws.pionex.com/ws';
 const timestamp = Date.now();
 const queryParams = {
     key: API_KEY,
-    timestamp: timestamp.toString(), // timestamp should be a string
+    timestamp: timestamp.toString(),
 };
 
 const sortedParams = Object.keys(queryParams)
@@ -34,7 +34,6 @@ const subscribePayload = {
     topic: 'BALANCE',
 };
 
-
 const ws = new WebSocket(authenticatedURL);
 
 ws.on('open', () => {
@@ -53,7 +52,6 @@ ws.on('message', (message) => {
         }
     }
 });
-
 
 ws.on('error', (error) => {
     console.error('WebSocket error:', error);
