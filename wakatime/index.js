@@ -1,18 +1,17 @@
 require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
-const Redis = require('ioredis'); // Import the Redis library
+const Redis = require('ioredis');
 const app = express();
 const port = process.env.PORT || 3358;
 const apiKey = process.env.WAKATIME_APIKEY;
 const apiUrl = process.env.WAKATIME_URL;
 
-// Create a Redis client
-const redisClient = new Redis(process.env.REDIS_URL); // Use the Redis URL
+const redisClient = new Redis(process.env.REDIS_URL);
 
 const fetchWakatimeData = async () => {
     try {
-        const cachedData = await redisClient.get('wakatimeData'); // Check if data exists in Redis cache
+        const cachedData = await redisClient.get('wakatimeData');
         if (cachedData) {
             return JSON.parse(cachedData);
         } else {
@@ -32,7 +31,6 @@ const fetchWakatimeData = async () => {
                 best_day: response.data.data.best_day
             };
 
-            // Store fetched data in Redis cache
             await redisClient.set('wakatimeData', JSON.stringify(wakatimeData));
             return wakatimeData;
         }
@@ -42,7 +40,7 @@ const fetchWakatimeData = async () => {
     }
 };
 
-app.get('/wakatime', async (req, res) => {
+app.get('/', async (req, res) => {
     try {
         const wakatimeData = await fetchWakatimeData();
         res.json(wakatimeData);
