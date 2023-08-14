@@ -2,12 +2,22 @@ require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
 const Redis = require('ioredis');
+const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3358;
 const apiKey = process.env.WAKATIME_APIKEY;
 const apiUrl = process.env.WAKATIME_URL;
 
 const redisClient = new Redis(process.env.REDIS_URL);
+
+const allowedOrigins = [
+    'http://localhost:5173',
+    'https://thejb.onrender.com/'
+];
+
+app.use(cors({
+    origin: allowedOrigins
+}));
 
 const fetchWakatimeData = async () => {
     try {
