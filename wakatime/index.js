@@ -12,7 +12,7 @@ const redisClient = new Redis(process.env.REDIS_URL);
 
 const allowedOrigins = [
     'http://localhost:5173',
-    'https://thejb.onrender.com/'
+    'https://thejb.onrender.com'
 ];
 
 app.use(cors({
